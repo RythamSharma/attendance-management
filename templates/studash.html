@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Attendance Report</title>
+    <style>
+       
+        a{
+            
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #00ff00;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+}
+
+a.button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
+      
+      h1 {
+        text-align: center;
+        margin-top: 30px;
+      }
+      
+      table {
+        width: 80%;
+        margin: 50px auto;
+        border-collapse: collapse;
+      }
+      
+      th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+      
+      .glowing-number {
+        font-size: 80px;
+        text-align: center;
+        margin-top: 50px;
+        color: #4CAF50;
+        text-shadow: 0 0 10px #4CAF50;
+        animation: glow 1s ease-in-out infinite alternate;
+      }
+      
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px #4CAF50;
+        }
+        to {
+          text-shadow: 0 0 20px #4CAF50;
+        }
+      }
+      
+      .bar-graph {
+        display: flex;
+        align-items: center;
+        margin: 50px auto;
+        width: 80%;
+        height: 30px;
+        border-radius: 5px;
+        background-color: #ddd;
+      }
+      
+      .subject-bar {
+        height: 100%;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        animation: fill-bar 2s ease-in-out forwards;
+      }
+      
+      .subject-computer-network {
+        width: 80%;
+      }
+      
+      .subject-oops {
+        width: 60%;
+      }
+      
+      .subject-operating-system {
+        width: 70%;
+      }
+      
+      .subject-mathematics {
+        width: 50%;
+      }
+      
+      @keyframes fill-bar {
+        from {
+          width: 0%;
+        }
+        to {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  
+  <body>
+    <h1>Attendance Report</h1>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Roll Number</th>
+          <th>Section</th>
+          <th>Course</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Naman Sharma</td>
+          <td>45</td>
+          <td>A</td>
+          <td>B.Tech (Computer Science)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Attendance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{sub}}
+          </td>
+          <td>{{per}}%</td>
+       
+      </tbody>
+    </table>
+    
+    <div class="glowing-number">{{per}}%</div>
+    
+    <div class="bar-graph">
+      <div class="subject-bar subject-computer-network"></div>
+      <div class="subject-bar subject-oops"></div>
+      <div class="subject-bar subject-operating-system"></div>
+      <div class="subject-bar subject-mathematics"></div>
+    </div>
+    <a href="{{url_for('qrscanner',roll=request.args.get('roll'))}}" class="button">Give Attendance</a>
+    
+    <script>
+      // set the width of each subject bar based on the attendance percentage
+      const computerNetworkAttendance = 80;
+      const oopsAttendance = 70;
+      const operatingSystemAttendance = 90;
+      const mathematicsAttendance = 75;
+      
+      const computerNetworkBar = document.querySelector('.subject-computer-network');
+      computerNetworkBar.style.width = computerNetworkAttendance + '%';
+      
+      const oopsBar = document.querySelector('.subject-oops');
+      oopsBar.style.width = oopsAttendance + '%';
+      
+      const operatingSystemBar = document.querySelector('.subject-operating-system');
+      operatingSystemBar.style.width = operatingSystemAttendance + '%';
+      
+      const mathematicsBar = document.querySelector('.subject-mathematics');
+      mathematicsBar.style.width = mathematicsAttendance + '%';
+    </script>
+    

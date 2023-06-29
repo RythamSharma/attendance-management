@@ -1,0 +1,44 @@
+<style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 1em;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.5em;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #ddd;
+    }
+  </style>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Roll</th>
+        <th>Subject</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+        <tr>
+          <td>{{ record.name }}</td>
+          <td>{{ record.roll }}</td>
+          <td>{{ record.subject }}</td>
+          <td>{{ record.status }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  

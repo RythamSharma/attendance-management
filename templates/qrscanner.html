@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>QR Code Scanner</title>
+    <style>
+      /* CSS styles here */
+      #scanner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      #scanner {
+        width: 300px;
+        height: 300px;
+      }
+      #result {
+        margin-top: 20px;
+        font-size: 24px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>QR Code Scanner</h1>
+    <div id="scanner-container">
+      <video id="scanner" autoplay="true"></video>
+    </div>
+    <div id="result"></div>
+    <script src="https://cdn.rawgit.com/cozmo/jsQR/master/dist/jsQR.js"></script>
+    <script>
+      const video = document.getElementById('scanner');
+      const result = document.getElementById('result');
+
+      function onVideoCanPlay() {
+        video.removeEventListener('canplay', onVideoCanPlay);
+        const canvas = document.createElement('canvas');
+        const canvasContext = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const fps = 10;
+
+        setInterval(() => {
+          canvasContext.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const imageData = canvasContext.getImageData(0, 0, canvas.width, canvas.height);
+          const code = jsQR(imageData.data, imageData.width, imageData.height);
+          if (code) {
+            console.log(code);
+            video.pause();
+            result.textContent = `Result: ${code.data}`;
+            window.location.href = code.data; // redirect to scanned URL
+          }
+        }, 1000 / fps);
+      }
+
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+          video.addEventListener('canplay', onVideoCanPlay);
+        })
+        .catch((err) => {
+          console.error(err);
+          result.textContent = 'Error: ' + err.message;
+        });
+
+    </script>
+  </body>
+</html>
